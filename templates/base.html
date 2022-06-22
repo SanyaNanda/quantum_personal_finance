@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>{% block title %}{% endblock %}</title>
+
+    <!-- Favicon  -->
+    <link rel="icon" href="{% static 'file/img/core-img/favicon.ico' %}">
+
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="{% static 'file/css/core-style.css' %}">
+    <link rel="stylesheet" href="{% static 'file/style.css' %}">
+
+    <!-- Responsive CSS -->
+    <link href="{% static 'file/css/responsive.css' %}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrapper">
+        {% block content %}{% endblock %}
+    </div>
+    <!-- /.wrapper end -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="{% static 'file/js/jquery/jquery-2.2.4.min.js' %}"></script>
+    <!-- Popper js -->
+    <script src="{% static 'file/js/popper.min.js' %}"></script>
+    <!-- Bootstrap js -->
+    <script src="{% static 'file/js/bootstrap.min.js' %}"></script>
+    <!-- Plugins js -->
+    <script src="{% static 'file/js/plugins.js' %}"></script>
+    <!-- Active js -->
+    <script src="{% static 'file/js/active.js' %}"></script>
+
+</body>
+
+</html>

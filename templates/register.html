@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% comment %} {% load i18n %} {% endcomment %}
+
+
+{% block title %}QPF-Sign up{% endblock %}
+
+{% block content %}
+
+    <div class="col-12 col-md-10">
+        <div class="checkout_details_area mt-50 clearfix" style="margin-left:15rem;">
+
+            <div class="cart-page-heading">
+                <h5>Sign up</h5>
+            </div>
+
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="first_name">First Name <span>*</span></label>
+                        <input type="text" class="form-control" name="first_name" value="" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="last_name">Last Name <span>*</span></label>
+                        <input type="text" class="form-control" name="last_name" value="" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="company">username</label>
+                        <input type="text" class="form-control" name="username" value="" required>
+                    </div>
+                    {% comment %} <div class="col-12 mb-3">
+                        <label for="country">Choose a Lab: <span>*</span></label>
+                        <select class="custom-select d-block w-100" name="center" method="POST" required>
+                            {% for centers in c %}
+                          <option value="{{centers.id}}" selected >{{centers.name}}</option>
+                          {% endfor %}
+                    </select>
+                    </div> {% endcomment %}
+                    <div class="col-12 mb-3">
+                        <label for="postcode">Email <span>*</span></label>
+                        <input type="text" class="form-control" name="email" value="" required>
+                    </div>
+                    {% comment %} <div class="col-12 mb-3">
+                        <label for="city">gender <span>*</span></label>
+                        <input type="text" class="form-control" name="gender" value="" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="state">Age <span>*</span></label>
+                        <input type="text" class="form-control" name="age" value="" required>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="col-12 mb-3">
+                        <label for="phone_number">Phone No <span>*</span></label>
+                        <input type="number" class="form-control" name="phone_number" min="0" value="" required>
+                    </div> {% endcomment %}
+                    <div class="col-12 mb-4">
+                        <label for="company" class="required">Password<span>*</span></label>
+                        <input type="password" name="password" class="form-control" name="password" required/>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <label for="company" class="required">Password-confirm<span>*</span></label>
+                        <input type="password" name="cpassword" class="form-control" name="cpassword"required />
+                    </div>
+                    <div class="col-12">
+                        <div class="custom-control custom-checkbox d-block mb-2">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+                            <label class="custom-control-label" for="customCheck1">I agree the <b>Terms and Conditions</b></label>
+                        </div>
+                        {% comment %} <div class="custom-control custom-checkbox d-block mb-2">
+                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                            <label class="custom-control-label" for="customCheck2">Create an accout</label>
+                        </div> {% endcomment %}
+                    </div>
+                    <div class="col-12 mb-4">
+                        <input type="submit" value="Submit" class="btn karl-checkout-btn" id="submit" name="submit" />
+                        <br>
+                        <br>
+                        {% comment %} <input type="submit" value="Reset" class="btn karl-checkout-btn" id="reset" name="reset" /> {% endcomment %}
+                    </div>
+                    <a href="{% url 'authenticate:login' %}">Already have an account? Sign in </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
