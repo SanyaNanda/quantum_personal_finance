@@ -51,7 +51,7 @@ def LoginView(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('authenticate:home')
+            return redirect('finances:home', username=username)
         else:
             messages.error(request, "Invalid username or password.")
     return render(request = request, template_name = "login.html",)

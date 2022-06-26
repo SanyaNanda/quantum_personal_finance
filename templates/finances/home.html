@@ -1,0 +1,16 @@
+{% extends "../base.html" %}
+
+{% block title %}QPF-Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+hi
+
+<a href="{% url 'finances:add-income' user.username %}">Add Income</a>
+<a href="{% url 'finances:add-expense' user.username %}">Add Expense</a>
+<a href="{% url 'finances:add-income-category' user.username %}">Add Income Category</a>
+<a href="{% url 'finances:add-expense-category' user.username %}">Add Expense Category</a>
+
+
+{% endif %}
+{% endblock %}

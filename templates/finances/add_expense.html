@@ -1,0 +1,39 @@
+{% extends "../base.html" %}
+{% block title %}QPF-Add Expense{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <h3>Add Your Expense</h3>
+      <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="amount">Amount <span>*</span></label>
+                <input type="int" class="form-control" name="amount" value="" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="expense">Expense Name<span>*</span></label>
+                <input type="text" class="form-control" name="expense" value="" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="note">Note <span>*</span></label>
+                <input type="text" class="form-control" name="note" value="" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="time_stamp">Date<span>*</span></label>
+                <input type="date" class="form-control" name="time_stamp" value="" required>
+            </div> 
+            <div>
+            <label for="category">Category <span>*</span></label>
+            <select class="dropdown-menu" name="category">
+                {% for category in category_list %}
+                     <option name="category" value="{{ category.id }}">{{ category.name}}</option>
+                {% endfor %}
+            </select>
+            </div>
+        <button class="btn btn-dark w-100 mt-3" type="submit">Add Expense</button>
+        </div>  
+    </form>
+      {% endif %}
+  </div>
+  {% endblock %}
