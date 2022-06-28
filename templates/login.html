@@ -1,11 +1,8 @@
-{% extends "base.html" %}
-
 {% load static %}
 {% comment %} 
 {% load i18n %}
 {% load account socialaccount %} {% endcomment %}
 
-{% block title %}QPF-Login {% endblock %}
 
 {% block content %}
 
@@ -80,13 +77,11 @@
 <html lang="en">
 
 <head>
+  <title>QPF-Login</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>
-    Soft UI Dashboard by Creative Tim
-  </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -107,7 +102,7 @@
         <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
           <div class="container-fluid pe-0">
             <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
-              Soft UI Dashboard
+              Quantum Personal Finance Dashboard
             </a>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon mt-2">
@@ -118,26 +113,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navigation">
               <ul class="navbar-nav mx-auto ms-xl-auto me-xl-7">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
+                 <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'authenticate:home' %}">
                     <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
-                    Dashboard
+                    Home
                   </a>
                 </li>
-                <li class="nav-item">
+                {% comment %} <li class="nav-item">
                   <a class="nav-link me-2" href="../pages/profile.html">
                     <i class="fa fa-user opacity-6 text-dark me-1"></i>
                     Profile
                   </a>
-                </li>
+                </li>  {% endcomment %}
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="../pages/sign-up.html">
+                  <a class="nav-link me-2" href="{% url 'authenticate:signup' %}">
                     <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
                     Sign Up
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="../pages/sign-in.html">
+                  <a class="nav-link me-2" href="{% url 'authenticate:login' %}">
                     <i class="fas fa-key opacity-6 text-dark me-1"></i>
                     Sign In
                   </a>
@@ -199,7 +194,7 @@
             </div>
             <div class="col-md-6">
               <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('file/assets/img/curved-images/curved6.jpg')"></div>
+                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../static/images/login.jpg')"></div>
               </div>
             </div>
           </div>
@@ -207,8 +202,8 @@
       </div>
     </section>
   </main>
-  <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-  <footer class="footer py-5">
+  <!--  START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT  -->
+  {% comment %} <footer class="footer py-5">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mb-4 mx-auto text-center">
@@ -259,8 +254,8 @@
         </div>
       </div>
     </div>
-  </footer>
-  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  </footer> {% endcomment %}
+  <!--  END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT  -->
   <!--   Core JS Files   -->
   <script src="{% static 'file/assets/js/core/popper.min.js' %}"></script>
   <script src="{% static 'file/assets/js/core/bootstrap.min.js' %}"></script>

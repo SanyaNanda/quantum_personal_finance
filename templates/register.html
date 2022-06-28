@@ -1,10 +1,7 @@
-{% extends "base.html" %}
-
 {% load static %}
 {% comment %} {% load i18n %} {% endcomment %}
 
 
-{% block title %}QPF-Sign up{% endblock %}
 
 {% block content %}
 
@@ -104,13 +101,11 @@
 <html lang="en">
 
 <head>
+  <title>QPF- Sign up</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>
-    Soft UI Dashboard by Creative Tim
-  </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -140,25 +135,25 @@
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto ms-xl-auto me-xl-7">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
+            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'authenticate:home' %}">
               <i class="fa fa-chart-pie opacity-6  me-1"></i>
-              Dashboard
+              Home
             </a>
           </li>
-          <li class="nav-item">
+          {% comment %} <li class="nav-item">
             <a class="nav-link me-2" href="../pages/profile.html">
               <i class="fa fa-user opacity-6  me-1"></i>
               Profile
             </a>
-          </li>
+          </li> {% endcomment %}
           <li class="nav-item">
-            <a class="nav-link me-2" href="../pages/sign-up.html">
+            <a class="nav-link me-2" href="{% url 'authenticate:signup' %}">
               <i class="fas fa-user-circle opacity-6  me-1"></i>
               Sign Up
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2" href="../pages/sign-in.html">
+            <a class="nav-link me-2" href="{% url 'authenticate:login' %}">
               <i class="fas fa-key opacity-6  me-1"></i>
               Sign In
             </a>
@@ -178,13 +173,14 @@
   <!-- End Navbar -->
   <main class="main-content  mt-0">
     <section class="min-vh-100 mb-8">
-      <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('../assets/img/curved-images/curved14.jpg');">
+      <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" >
+      {% comment %} <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('../static/images/signup.jpg');"> {% endcomment %}
         <span class="mask bg-gradient-dark opacity-6 " style="height: 80%;"></span>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-5 text-center mx-auto">
               <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-              <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+              {% comment %} <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p> {% endcomment %}
             </div>
           </div>
         </div>
@@ -281,60 +277,7 @@
         </div>
       </div>
     </section>
-    <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-    <footer class="footer py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mb-4 mx-auto text-center">
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Company
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              About Us
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Team
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Products
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Blog
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-              Pricing
-            </a>
-          </div>
-          <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-              <span class="text-lg fab fa-dribbble"></span>
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-              <span class="text-lg fab fa-twitter"></span>
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-              <span class="text-lg fab fa-instagram"></span>
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-              <span class="text-lg fab fa-pinterest"></span>
-            </a>
-            <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-              <span class="text-lg fab fa-github"></span>
-            </a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8 mx-auto text-center mt-1">
-            <p class="mb-0 text-secondary">
-              Copyright © <script>
-                document.write(new Date().getFullYear())
-              </script> Soft by Creative Tim.
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+    <!--  END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT  -->
   </main>
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
