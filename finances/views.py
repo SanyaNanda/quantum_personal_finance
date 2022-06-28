@@ -2,12 +2,18 @@ from django.shortcuts import render
 from django.shortcuts import  redirect
 from django.contrib.auth.models import User
 from .models import Income, Expense, IncomeCategory, ExpenseCategory
+from django.contrib.auth.decorators import login_required
 
 ####################################################################
 
 # Home page
+@login_required
 def HomeView(request, username=None):
-    return render(request,"finances/home.html")
+    profile = User.objects.get(username=username)
+    context = {
+        'profile':profile,
+    }
+    return render(request,"finances/home.html",context)
 
 ####################################################################
 
