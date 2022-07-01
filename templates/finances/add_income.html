@@ -6,7 +6,7 @@
       <h3>Add Your Income</h3>
       <form method="post">
         {% csrf_token %}
-        <div class="row">
+        <div class="row" >
             <div class="col-md-6 mb-3">
                 <label for="amount">Amount <span>*</span></label>
                 <input type="int" class="form-control" name="amount" value="" required>
@@ -25,15 +25,15 @@
             </div> 
             <div>
             <label for="category">Category <span>*</span></label>
-            <select class="dropdown-menu" name="category">
-                {% for category in category_list %}
-                     <option name="category" value="{{ category.id }}">{{ category.name}}</option>
+            <select  class="btn-outline-primary" name="category">
+                {% for c in category_list %}
+                     <option value="{{ c.id }}">{{ c.name }}</option>
                 {% endfor %}
             </select>
             </div>
-        <button class="btn btn-dark w-100 mt-3" type="submit">Add Income</button>
+        <button class="btn w-100 mt-3 btn-primary" type="submit">Add Income</button>
         </div>  
     </form>
       {% endif %}
   </div>
-  {% endblock %}
+  {% endblock %} 

@@ -1,0 +1,53 @@
+{% extends "../base.html" %}
+{% block title %}QPF-Dashboard{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <h3>Monthly Analytics: {{ month }}/{{ year }}</h3>
+      <h5>Filter Month</h5>
+      <form method="post">
+        {% csrf_token %}
+        <div class="row" >
+            <div class="col-md-6 mb-3">
+                <label for="month">Month <span>*</span></label>
+                <input type="int" class="form-control" name="month" value="" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="year">Year <span>*</span></label>
+                <input type="text" class="form-control" name="year" value="" required>
+        <button class="btn w-100 mt-3 btn-primary" type="submit">Filter</button>
+        </div>  
+    </form>
+
+    {{ monthly_income }}
+    {{ monthly_expense }}
+    {{ monthly_saving }}
+    {{ monthly_category_wise_income }}
+    {{ monthly_category_wise_expense }}
+    {{ monthly_category_wise_income_percent }}
+    {{ monthly_category_wise_expense_percent }}
+
+    {% comment %} {% for e in expense_category %}
+    {{ e }}
+    {{ monthly_category_wise_expense }}
+    {% endfor %} {% endcomment %}
+
+    {% for key, value in expense_category.items %}
+    {{ value }}
+    {% endfor %}
+
+    {% for item in expense_category %} 
+  {{ mydict.item.NAME }} 
+  {% endfor %}
+
+    {% for income in income_list %}
+    {{ income.source }}
+    {{ income.source }}
+    {{ income.source }}
+    {{ income.source }}
+    {{ income.source }}
+    {{ income.source }}
+    {% endfor %}
+      {% endif %}
+  </div>
+  {% endblock %} 

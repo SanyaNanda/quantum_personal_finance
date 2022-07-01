@@ -25,13 +25,13 @@
             </div> 
             <div>
             <label for="category">Category <span>*</span></label>
-            <select class="dropdown-menu" name="category">
-                {% for category in category_list %}
-                     <option name="category" value="{{ category.id }}">{{ category.name}}</option>
+            <select  class="btn-outline-primary" name="category">
+                {% for c in category_list %}
+                     <option value="{{ c.id }}">{{ c.name }}</option>
                 {% endfor %}
             </select>
             </div>
-        <button class="btn btn-dark w-100 mt-3" type="submit">Add Expense</button>
+        <button class="btn btn-primary w-100 mt-3" type="submit">Add Expense</button>
         </div>  
     </form>
       {% endif %}

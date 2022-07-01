@@ -21,7 +21,7 @@ class IncomeCategory(models.Model):
 
 class Income(models.Model):
     profile = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='income_user')
-    time_stamp = models.DateField(auto_now=True,auto_now_add=False)
+    time_stamp = models.DateField()
     source = models.CharField(max_length=250, blank=False)
     amount = models.IntegerField()
     note = models.CharField(max_length=5000)
@@ -32,7 +32,7 @@ class Income(models.Model):
 
 class Expense(models.Model):
     profile = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='expense_user')
-    time_stamp = models.DateField(auto_now=True,auto_now_add=False)
+    time_stamp = models.DateField()
     expense = models.CharField(max_length=250, blank=False)
     amount = models.IntegerField()
     note = models.CharField(max_length=5000)

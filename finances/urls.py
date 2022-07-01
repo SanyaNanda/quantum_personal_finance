@@ -12,5 +12,6 @@ urlpatterns = [
    path('add-expense/<username>/', AddExpenseView,name="add-expense"),
    path('add-income-category/<username>/', AddIncomeCategoryView,name="add-income-category"),
    path('add-expense-category/<username>/', AddExpenseCategoryView,name="add-expense-category"),
+   path('dashboard/<username>/', DashboardView,name="dashboard"),
 
 ]
