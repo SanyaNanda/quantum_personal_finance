@@ -1,0 +1,41 @@
+{% extends "../base.html" %}
+{% block title %}QPF-Dashboard{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <h3>Monthly Analytics: {{ month }}/{{ year }}</h3>
+      <h5>Filter Date/Category</h5>
+      <form method="GET">
+        {% csrf_token %}
+        <div class="row" >
+            <div class="col-md-6 mb-3">
+                <label for="month">Month <span></span></label>
+                <input type="int" class="form-control" name="month" value="" >
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="year">Year <span></span></label>
+                <input type="text" class="form-control" name="year" value="" >
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="category">Category <span></span></label>
+            <select  class="btn-outline-primary" name="category">
+            {% for c in category_list %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+            <option value="">{{ None }}</option>
+            </select>
+        </div>  
+        <button class="btn w-100 mt-3 btn-primary" type="submit">Filter</button>
+
+    </form>
+    {% for expense in expense_list %}
+    {{ expense.expense }}
+    {{ expense.amount }}
+    {{ expense.note }}
+    {{ expense.category }} 
+    {{ expense.time_stamp }}
+    <br>
+    {% endfor %}
+    {% endif %}
+  </div>
+  {% endblock %} 

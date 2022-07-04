@@ -5,7 +5,7 @@
       {% if user.is_authenticated %}
       <h3>Monthly Analytics: {{ month }}/{{ year }}</h3>
       <h5>Filter Month</h5>
-      <form method="post">
+      <form method="GET">
         {% csrf_token %}
         <div class="row" >
             <div class="col-md-6 mb-3">
@@ -15,24 +15,28 @@
             <div class="col-md-6 mb-3">
                 <label for="year">Year <span>*</span></label>
                 <input type="text" class="form-control" name="year" value="" required>
-        <button class="btn w-100 mt-3 btn-primary" type="submit">Filter</button>
         </div>  
+        <button class="btn w-100 mt-3 btn-primary" type="submit">Filter</button>
+
     </form>
 
     {{ monthly_income }}
     {{ monthly_expense }}
+    {{ expense_percent }}%
     {{ monthly_saving }}
+    {{ saving_percent }}%
     {{ monthly_category_wise_income }}
     {{ monthly_category_wise_expense }}
     {{ monthly_category_wise_income_percent }}
     {{ monthly_category_wise_expense_percent }}
+    {{ monthly_category_wise_expense_of_income }}
 
     {% comment %} {% for e in expense_category %}
     {{ e }}
     {{ monthly_category_wise_expense }}
     {% endfor %} {% endcomment %}
 
-    {% for key, value in expense_category.items %}
+    {% comment %} {% for key, value in expense_category.items %}
     {{ value }}
     {% endfor %}
 
@@ -48,6 +52,28 @@
     {{ income.source }}
     {{ income.source }}
     {% endfor %}
-      {% endif %}
+
+    {% for i in monthly_income_details %}
+    <br>
+    {{ i.source }}
+    {{ i.amount }}
+    {{ i.note }}
+    {{ i.category }} 
+    {{ i.time_stamp }}
+    {% endfor %}
+    <br>
+    <br>
+    {% for exp in monthly_expense_details %}
+    {% for j in expense_category %}
+    {% if exp.category.id == j.id %}
+    <br>
+    {{ exp.expense }}
+    {{ exp.amount }}
+    {{ exp.note }}
+    {{ exp.category }} 
+    {% endif %}
+    {% endfor %}
+    {% endfor %} {% endcomment %}
+    {% endif %}
   </div>
   {% endblock %} 

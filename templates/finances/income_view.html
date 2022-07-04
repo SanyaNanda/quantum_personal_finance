@@ -1,0 +1,18 @@
+{% extends "../base.html" %}
+{% block title %}QPF-Dashboard{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <h3>Monthly Analytics: {{ month }}/{{ year }}</h3>
+      <h5>Filter Date/Category</h5>
+    {% for income in income_list %}
+    {{ income.source }}
+    {{ income.amount }}
+    {{ income.note }}
+    {{ income.category }} 
+    {{ income.time_stamp }}
+    <br>
+    {% endfor %}
+    {% endif %}
+  </div>
+  {% endblock %} 

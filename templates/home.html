@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Patrix, Bootstrap 5 Landing Page</title>
+    <title>Quantum Personal Finance</title>
     <link rel="stylesheet" href="{% static 'home/assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'home/assets/css/fontawesome.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
@@ -43,12 +43,12 @@
           <li class="nav-item"><a class="nav-link" href="#contact">contact</a>
           </li>
         </ul>
-        <button type="button" class="rounded-pill btn-rounded">
+        {% comment %} <button type="button" class="rounded-pill btn-rounded">
           +91-99999999
           <span>
             <i class="fas fa-phone-alt"></i>
           </span>
-        </button>
+        </button> {% endcomment %}
       </div>
     </div>
   </nav>
@@ -64,10 +64,10 @@
       <div class="col-md-6 intros text-start">
         <h1 class="display-2">
           <span class="display-2--intro">Hey!,Welcome to Quantum Personal Finance</span>
-          <span class="display-2--description lh-base">
+          {% comment %} <span class="display-2--description lh-base">
             this is a multi-purpose responsive layout created with bootstrap v5. 
             (here your can place your description text)
-          </span>
+          </span> {% endcomment %}
         </h1>
         <a href="{% url 'authenticate:login' %}">
         <button type="button" class="rounded-pill btn-rounded">Get Started
@@ -99,7 +99,7 @@
   <section id="campanies" class="campanies">
     <div class="container">
       <div class="row text-center">
-        <h4 class="fw-bold lead mb-3">Trusted by campanies like</h4>
+        {% comment %} <h4 class="fw-bold lead mb-3">Trusted by campanies like</h4> {% endcomment %}
         <div class="heading-line mb-5"></div>
       </div>
     </div>
