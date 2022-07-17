@@ -107,25 +107,51 @@ def DashboardView(request, username=None):
 
     income_category = IncomeCategory.objects.filter(profile=profile)
     monthly_category_wise_income = {}
-    monthly_category_wise_income_percent = {}
+    # monthly_category_wise_income_percent = {}
     for i in income_category:
         income = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i).aggregate(Sum('amount'))['amount__sum']
         income_list = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i)
+        if income==None:
+            income=0
         monthly_category_wise_income[i.name] = income
-        if income!=None:
-            monthly_category_wise_income_percent[i.name] = round((income/monthly_income)*100, 2)
+        # if income!=None:
+        #     monthly_category_wise_income_percent[i.name] = round((income/monthly_income)*100, 2)
 
     expense_category = ExpenseCategory.objects.filter(profile=profile)
     monthly_category_wise_expense = {}   
     monthly_category_wise_expense_percent = {}
-    monthly_category_wise_expense_of_income = {}
+    monthly_category_wise_expense_of_income = {'Saving': saving_percent}
     for i in expense_category:
         expense = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i).aggregate(Sum('amount'))['amount__sum']
+        if expense==None:
+            expense=0
         expense_list = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i)
         monthly_category_wise_expense[i.name] = expense
-        if expense!=None:
+        if expense!=0:
             monthly_category_wise_expense_percent[i.name] = round((expense / monthly_expense)*100, 2)
             monthly_category_wise_expense_of_income[i.name] = round((expense / monthly_income)*100, 2)
+    
+    monthly_category_wise_expense = {k: v for k, v in sorted(monthly_category_wise_expense.items(), key=lambda x: x[1], reverse=True)}
+    monthly_category_wise_expense_percent = {k: v for k, v in sorted(monthly_category_wise_expense_percent.items(), key=lambda x: x[1], reverse=True)}
+    monthly_category_wise_expense_of_income = {k: v for k, v in sorted(monthly_category_wise_expense_of_income.items(), key=lambda x: x[1], reverse=True)}
+    monthly_category_wise_income = {k: v for k, v in sorted(monthly_category_wise_income.items(), key=lambda x: x[1], reverse=True)}
+
+    monthly_category_wise_expense_values = list(monthly_category_wise_expense.values())
+    monthly_category_wise_expense_keys = list(monthly_category_wise_expense.keys())
+    
+    monthly_category_wise_expense_percent_values = list(monthly_category_wise_expense_percent.values())
+    monthly_category_wise_expense_percent_keys = list(monthly_category_wise_expense_percent.keys())
+
+    monthly_category_wise_expense_of_income_values = list(monthly_category_wise_expense_of_income.values())
+    monthly_category_wise_expense_of_income_keys = list(monthly_category_wise_expense_of_income.keys())
+
+    monthly_category_wise_income_values = list(monthly_category_wise_income.values())
+    monthly_category_wise_income_keys = list(monthly_category_wise_income.keys())
+
+    print(monthly_category_wise_income_values)
+    print(monthly_category_wise_income_keys)
+
+
     template = 'finances/dashboard.html'
     context = {
         'month': month,
@@ -133,21 +159,46 @@ def DashboardView(request, username=None):
         'monthly_income': monthly_income,
         'monthly_expense': monthly_expense,
         'monthly_saving': monthly_saving,
-        'monthly_category_wise_income': monthly_category_wise_income,
-        'monthly_category_wise_expense': monthly_category_wise_expense,
-        'monthly_category_wise_expense_percent': monthly_category_wise_expense_percent,
-        'monthly_category_wise_income_percent': monthly_category_wise_income_percent,
+
+        'monthly_category_wise_income_values': monthly_category_wise_income_values,
+        'monthly_category_wise_income_keys': monthly_category_wise_income_keys,
+
+        'monthly_category_wise_expense_values': monthly_category_wise_expense_values,
+        'monthly_category_wise_expense_keys': monthly_category_wise_expense_keys,
+        # 'monthly_category_wise_expense_percent': monthly_category_wise_expense_percent,
+        'monthly_category_wise_expense_percent_values': monthly_category_wise_expense_percent_values,
+        'monthly_category_wise_expense_percent_keys': monthly_category_wise_expense_percent_keys,
+
+        # 'monthly_category_wise_income_percent': monthly_category_wise_income_percent,
+        'monthly_category_wise_expense_of_income_values': monthly_category_wise_expense_of_income_values,
+        'monthly_category_wise_expense_of_income_keys': monthly_category_wise_expense_of_income_keys,
+
         'income_list': income_list,
         'expense_list': expense_list,
         'income_category': income_category,
         'expense_category': expense_category,
-        'monthly_category_wise_expense_of_income': monthly_category_wise_expense_of_income,
         'expense_percent': expense_percent,
         'saving_percent': saving_percent,
         'monthly_income_details': monthly_income_details,
         'monthly_expense_details': monthly_expense_details
     }
     return render(request, template, context)
+
+####################################################################
+
+# def pie_chart_expense(request):
+#     labels = []
+#     data = []
+
+#     queryset = City.objects.order_by('-population')[:5]
+#     for city in queryset:
+#         labels.append(city.name)
+#         data.append(city.population)
+
+#     return render(request, 'pie_chart.html', {
+#         'labels': labels,
+#         'data': data,
+#     })
 
 ####################################################################
 
@@ -160,15 +211,15 @@ def ExpenseView(request, username=None):
        year = request.GET['year'] 
        category = request.GET['category']
        if month=='' and year=='' and category!=None:
-           context["expense_list"] = Expense.objects.filter(profile=profile, category=category)
+           context["expense_list"] = Expense.objects.filter(profile=profile, category=category).order_by('-id')
        elif month!=None and year!=None and category=='':
-           context["expense_list"] = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year)  
+           context["expense_list"] = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year).order_by('-id')  
        elif month!=None and year=='' and category:
            return HttpResponse('provide year')
        elif month=='' and year!=None and category:
            return HttpResponse('provide month')
        elif month!=None and year!=None and category!=None:
-           context["expense_list"] = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=category)  
+           context["expense_list"] = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=category).order_by('-id')  
 
     # elif 'month' in request.GET and 'year':
     #     month = request.GET['month']
@@ -180,8 +231,9 @@ def ExpenseView(request, username=None):
     #     context["expense_list"] = Expense.objects.filter(profile=profile, categoty=category)
 
     else: 
-        context["expense_list"] = Expense.objects.filter(profile=profile) 
+        context["expense_list"] = Expense.objects.filter(profile=profile).order_by('-id')
     context["category_list"] = category
+    context["count"] = context["expense_list"].count()
     return render(request, "finances/expense_view.html", context)
 
 ####################################################################
@@ -189,5 +241,5 @@ def ExpenseView(request, username=None):
 def IncomeView(request, username=None):
     context ={}
     profile = User.objects.get(username=username)
-    context["income_list"] = Income.objects.filter(profile=profile)   
+    context["income_list"] = Income.objects.filter(profile=profile).order_by('-id')
     return render(request, "finances/income_view.html", context)

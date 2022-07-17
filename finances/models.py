@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class ExpenseCategory(models.Model):
     profile = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='expense_categoty_user')
     name = models.CharField(max_length=250, blank=False)
-    total_amount = models.IntegerField(null=True)
+    total_amount = models.IntegerField(null=True, default=0)
 
     def __str__(self):
         return self.name

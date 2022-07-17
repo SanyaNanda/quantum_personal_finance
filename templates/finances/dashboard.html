@@ -20,60 +20,232 @@
 
     </form>
 
-    {{ monthly_income }}
-    {{ monthly_expense }}
-    {{ expense_percent }}%
-    {{ monthly_saving }}
-    {{ saving_percent }}%
-    {{ monthly_category_wise_income }}
-    {{ monthly_category_wise_expense }}
-    {{ monthly_category_wise_income_percent }}
-    {{ monthly_category_wise_expense_percent }}
-    {{ monthly_category_wise_expense_of_income }}
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Monthly Income</p>
+                    <h5 class="font-weight-bolder mb-0">
+                      ₹{{ monthly_income }}
+                      {% comment %} <span class="text-success text-sm font-weight-bolder">+55%</span> {% endcomment %}
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Monthly Expense</p>
+                    <h5 class="font-weight-bolder mb-0">
+                      ₹{{ monthly_expense }}
+                      <span class="text-danger text-sm font-weight-bolder">{{ expense_percent }}%</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Monthly Saved</p>
+                    <h5 class="font-weight-bolder mb-0">
+                      ₹{{ monthly_saving }}
+                      <span class="text-success text-sm font-weight-bolder">{{ saving_percent }}%</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="container-fluid py-4">
+      <div class="row">
+    <div class="col-xl-6 col-sm-12 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div style="width: 100%;">
+          <p><center>Expense Division (in % of total month expense)</center></p>
+          <canvas id="pie-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    {% comment %} {% for e in expense_category %}
-    {{ e }}
-    {{ monthly_category_wise_expense }}
-    {% endfor %} {% endcomment %}
+     <div class="col-xl-6 col-sm-12 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body"> 
+          <div style="width: 100%;">
+          <p><center>Expense by Category (in ₹)</center></p>
+          <canvas id="bar-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>  
 
-    {% comment %} {% for key, value in expense_category.items %}
-    {{ value }}
-    {% endfor %}
+  </div>
+</div>
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-xl-6 col-sm-12 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body"> 
+          <div style="width: 100%;">
+          <p><center>Expense Division with respect to Income</center></p>
+          <canvas id="donut"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>  
 
-    {% for item in expense_category %} 
-  {{ mydict.item.NAME }} 
-  {% endfor %}
+     <div class="col-xl-6 col-sm-12 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body"> 
+          <div style="width: 100%;">
+          <p><center>Income by Category (in ₹)</center></p>
+          <canvas id="bar-chart1"></canvas>
+          </div>
+        </div>
+      </div>
+    </div> 
 
-    {% for income in income_list %}
-    {{ income.source }}
-    {{ income.source }}
-    {{ income.source }}
-    {{ income.source }}
-    {{ income.source }}
-    {{ income.source }}
-    {% endfor %}
+  </div>
+</div>
 
-    {% for i in monthly_income_details %}
-    <br>
-    {{ i.source }}
-    {{ i.amount }}
-    {{ i.note }}
-    {{ i.category }} 
-    {{ i.time_stamp }}
-    {% endfor %}
-    <br>
-    <br>
-    {% for exp in monthly_expense_details %}
-    {% for j in expense_category %}
-    {% if exp.category.id == j.id %}
-    <br>
-    {{ exp.expense }}
-    {{ exp.amount }}
-    {{ exp.note }}
-    {{ exp.category }} 
-    {% endif %}
-    {% endfor %}
-    {% endfor %} {% endcomment %}
+
     {% endif %}
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+      var config = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: {{ monthly_category_wise_expense_percent_values|safe }},
+            backgroundColor: [
+             // '#CDB4DB', '#FFC8DD', '#FFAFCC', '#BDE0FE', '#A2D2FF'
+              '#642CA9', '#FF36AB', '#FF74D4', '#FFB8DE', '#FFB8DE'
+            ],
+            label: 'Expenses'
+          }],
+          labels: {{ monthly_category_wise_expense_percent_keys|safe }}
+        },
+        options: {
+          responsive: true
+        }
+      }; 
+
+      var myBarChart = {
+        type: 'bar',
+        data: {
+          labels: {{ monthly_category_wise_expense_keys|safe }},
+          datasets: [{
+            backgroundColor: ['#642CA9', '#FF36AB', '#FF74D4', '#FFB8DE', '#FFB8DE'],
+            data: {{ monthly_category_wise_expense_values|safe }},
+            label: 'Expenses'
+          }]
+        },
+        options: {
+            responsive: true
+            }
+        };
+
+        var myDonut = {
+          type: 'doughnut',
+          data: {
+            datasets: [{
+              data: {{ monthly_category_wise_expense_of_income_values|safe }},
+              backgroundColor: [
+              '#FF36AB', '#D972FF', '#8447FF', '#8CFFDA', '#FFFFE8'
+              ],
+              label: 'Expenses'
+            }],
+            labels: {{ monthly_category_wise_expense_of_income_keys|safe }}
+          },
+          options: {
+            responsive: true
+          }
+        }; 
+
+        var myBarChart1 = {
+          type: 'bar',
+          data: {
+            labels: {{ monthly_category_wise_income_keys|safe }},
+            datasets: [{
+              backgroundColor: ['#8CFFDA', '#FF36AB', '#FF74D4', '#FFB8DE', '#FFB8DE'],
+              data: {{ monthly_category_wise_income_values|safe }},
+              label: 'Income Sources'
+            }]
+          },
+          options: {
+              responsive: true
+              }
+          }; 
+
+
+      window.onload = function() {
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+        var ctxx = document.getElementById('bar-chart').getContext('2d');
+        window.myBar = new Chart(ctxx, myBarChart);
+        var ctxxx = document.getElementById('donut').getContext('2d');
+        window.myDonut = new Chart(ctxxx, myDonut);
+        var ctxxxx = document.getElementById('bar-chart1').getContext('2d');
+        window.myBar1 = new Chart(ctxxxx, myBarChart1);
+      };
+    </script>
+
+
+    {% comment %} <script> 
+      var myBarChart = {
+      type: 'bar',
+      data: {
+        labels: {{ monthly_category_wise_expense_keys|safe }},
+        datasets: [{
+          backgroundColor: ['#642CA9', '#FF36AB', '#FF74D4', '#FFB8DE', '#FFB8DE'],
+          data: {{ monthly_category_wise_expense_values|safe }},
+          label: 'Expenses'
+        }]
+      },
+      options: {
+          responsive: true
+          }
+      };     
+      window.onload = function() {
+        var ctx = document.getElementById('bar-chart').getContext('2d');
+        window.myBar = new Chart(ctx, myBarChart);
+      };
+    </script> {% endcomment %}
+
   {% endblock %} 
