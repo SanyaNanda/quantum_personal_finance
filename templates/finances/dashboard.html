@@ -19,7 +19,9 @@
         <button class="btn w-100 mt-3 btn-primary" type="submit">Filter</button>
 
     </form>
-
+    {% if monthly_income == None %}
+    <h5><span class="text-danger font-weight-bolder">NOTE: </span>No data added for the month. Please add income and expenses to view the Dashboard Analytics</h5>
+    {% endif %}
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">

@@ -101,56 +101,78 @@ def DashboardView(request, username=None):
     monthly_income_details = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year)
     monthly_expense = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year).aggregate(Sum('amount'))['amount__sum']
     monthly_expense_details = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year)
-    monthly_saving = monthly_income - monthly_expense
-    expense_percent = round(monthly_expense*100/monthly_income,2)
-    saving_percent = round(monthly_saving*100/monthly_income, 2)
+    if monthly_income!=None:
+        if monthly_expense==None:
+            monthly_expense = 0
+        monthly_saving = monthly_income - monthly_expense
+        expense_percent = round(monthly_expense*100/monthly_income,2)
+        saving_percent = round(monthly_saving*100/monthly_income, 2)
 
-    income_category = IncomeCategory.objects.filter(profile=profile)
-    monthly_category_wise_income = {}
-    # monthly_category_wise_income_percent = {}
-    for i in income_category:
-        income = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i).aggregate(Sum('amount'))['amount__sum']
-        income_list = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i)
-        if income==None:
-            income=0
-        monthly_category_wise_income[i.name] = income
-        # if income!=None:
-        #     monthly_category_wise_income_percent[i.name] = round((income/monthly_income)*100, 2)
+        income_category = IncomeCategory.objects.filter(profile=profile)
+        monthly_category_wise_income = {}
+        # monthly_category_wise_income_percent = {}
+        for i in income_category:
+            income = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i).aggregate(Sum('amount'))['amount__sum']
+            income_list = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i)
+            if income==None:
+                income=0
+            monthly_category_wise_income[i.name] = income
+            # if income!=None:
+            #     monthly_category_wise_income_percent[i.name] = round((income/monthly_income)*100, 2)
 
-    expense_category = ExpenseCategory.objects.filter(profile=profile)
-    monthly_category_wise_expense = {}   
-    monthly_category_wise_expense_percent = {}
-    monthly_category_wise_expense_of_income = {'Saving': saving_percent}
-    for i in expense_category:
-        expense = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i).aggregate(Sum('amount'))['amount__sum']
-        if expense==None:
-            expense=0
-        expense_list = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i)
-        monthly_category_wise_expense[i.name] = expense
-        if expense!=0:
-            monthly_category_wise_expense_percent[i.name] = round((expense / monthly_expense)*100, 2)
-            monthly_category_wise_expense_of_income[i.name] = round((expense / monthly_income)*100, 2)
-    
-    monthly_category_wise_expense = {k: v for k, v in sorted(monthly_category_wise_expense.items(), key=lambda x: x[1], reverse=True)}
-    monthly_category_wise_expense_percent = {k: v for k, v in sorted(monthly_category_wise_expense_percent.items(), key=lambda x: x[1], reverse=True)}
-    monthly_category_wise_expense_of_income = {k: v for k, v in sorted(monthly_category_wise_expense_of_income.items(), key=lambda x: x[1], reverse=True)}
-    monthly_category_wise_income = {k: v for k, v in sorted(monthly_category_wise_income.items(), key=lambda x: x[1], reverse=True)}
+        expense_category = ExpenseCategory.objects.filter(profile=profile)
+        monthly_category_wise_expense = {}   
+        monthly_category_wise_expense_percent = {}
+        monthly_category_wise_expense_of_income = {'Saving': saving_percent}
+        for i in expense_category:
+            expense = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i).aggregate(Sum('amount'))['amount__sum']
+            if expense==None:
+                expense=0
+            expense_list = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i)
+            monthly_category_wise_expense[i.name] = expense
+            if expense!=0:
+                monthly_category_wise_expense_percent[i.name] = round((expense / monthly_expense)*100, 2)
+                monthly_category_wise_expense_of_income[i.name] = round((expense / monthly_income)*100, 2)
+        
+            monthly_category_wise_expense = {k: v for k, v in sorted(monthly_category_wise_expense.items(), key=lambda x: x[1], reverse=True)}
+            monthly_category_wise_expense_percent = {k: v for k, v in sorted(monthly_category_wise_expense_percent.items(), key=lambda x: x[1], reverse=True)}
+            monthly_category_wise_expense_of_income = {k: v for k, v in sorted(monthly_category_wise_expense_of_income.items(), key=lambda x: x[1], reverse=True)}
+            monthly_category_wise_income = {k: v for k, v in sorted(monthly_category_wise_income.items(), key=lambda x: x[1], reverse=True)}
 
-    monthly_category_wise_expense_values = list(monthly_category_wise_expense.values())
-    monthly_category_wise_expense_keys = list(monthly_category_wise_expense.keys())
-    
-    monthly_category_wise_expense_percent_values = list(monthly_category_wise_expense_percent.values())
-    monthly_category_wise_expense_percent_keys = list(monthly_category_wise_expense_percent.keys())
+            monthly_category_wise_expense_values = list(monthly_category_wise_expense.values())
+            monthly_category_wise_expense_keys = list(monthly_category_wise_expense.keys())
+            
+            monthly_category_wise_expense_percent_values = list(monthly_category_wise_expense_percent.values())
+            monthly_category_wise_expense_percent_keys = list(monthly_category_wise_expense_percent.keys())
 
-    monthly_category_wise_expense_of_income_values = list(monthly_category_wise_expense_of_income.values())
-    monthly_category_wise_expense_of_income_keys = list(monthly_category_wise_expense_of_income.keys())
+            monthly_category_wise_expense_of_income_values = list(monthly_category_wise_expense_of_income.values())
+            monthly_category_wise_expense_of_income_keys = list(monthly_category_wise_expense_of_income.keys())
 
-    monthly_category_wise_income_values = list(monthly_category_wise_income.values())
-    monthly_category_wise_income_keys = list(monthly_category_wise_income.keys())
+            monthly_category_wise_income_values = list(monthly_category_wise_income.values())
+            monthly_category_wise_income_keys = list(monthly_category_wise_income.keys())
 
-    print(monthly_category_wise_income_values)
-    print(monthly_category_wise_income_keys)
-
+    # print(monthly_category_wise_income_values)
+    # print(monthly_category_wise_income_keys)
+    else:
+        monthly_saving = None
+        monthly_category_wise_income_values = []
+        monthly_category_wise_income_keys = []
+        monthly_category_wise_expense_values = []
+        monthly_category_wise_expense_keys = []
+        monthly_category_wise_expense_percent_values = []
+        monthly_category_wise_expense_percent_keys = []
+        monthly_category_wise_expense_of_income_values = []
+        monthly_category_wise_expense_of_income_keys = []
+        income_list = []
+        expense_list = []
+        income_category = []
+        expense_category = []
+        expense_percent = []
+        saving_percent = []
+        monthly_income_details = []
+        monthly_expense_details = []
+        
+        
 
     template = 'finances/dashboard.html'
     context = {
