@@ -2,16 +2,29 @@
 using Qiskit Machine Learning and Finance
 
 Features
-- Add monthly income
-- Add monthly expense
-- View income and expenses listed
-- Add category of expense and income
+- Home page
+- Sign up and Sign in
+- Dashboard with monthly analytics
+-- Monthly Income, Monthly Expense and Monthy saved at top
+-- Expense Division (pie chart)
+-- Expense by category (bar chart)
+-- Expense Division with respect to income (donut chart)
+-- Income by category (bar chart)
+-- Filter by Month of the year
+- Add income
+- Add expense
+- Add income category
+- Add expense category
+- View income and expenses listed by date (Filter by category or mm-yyyy)
 - View income and expenses category wise
-- Analytical dashboard with graphs to analyze expenses
-- Filter by month, year or category to analyze better
+- Special Benefit Category of income that you never get as your expense was handled (like flight renumeration from your company)
 
 To Do
-- Benefits in kind to be added as income and used as expense
-- Weekly analysis
-- Quantum investment part
-- 
+- Payment cash or digital
+- Accounts Recievable and Payable (k)
+- Section to maintain Income Tax Return related information
+- Dedicated section for budgeting big life decisions (like wedding, college etc)
+- Section on investment done on dependent family members like kids
+- Weekly analysis (chart on dashboard)
+- What to do with saved money (quantum investment)
+
