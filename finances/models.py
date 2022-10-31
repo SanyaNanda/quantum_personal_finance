@@ -23,8 +23,8 @@ class Income(models.Model):
     profile = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='income_user')
     time_stamp = models.DateField()
     source = models.CharField(max_length=250, blank=False)
-    amount = models.IntegerField()
-    note = models.CharField(max_length=5000)
+    amount = models.FloatField()
+    note = models.CharField(max_length=5000, blank=True)
     category = models.ForeignKey(IncomeCategory, on_delete=models.CASCADE, related_name='income_category')
     
     def __str__(self):
@@ -35,7 +35,7 @@ class Expense(models.Model):
     time_stamp = models.DateField()
     expense = models.CharField(max_length=250, blank=False)
     amount = models.IntegerField()
-    note = models.CharField(max_length=5000)
+    note = models.FloatField(max_length=5000, blank=True)
     category = models.ForeignKey(ExpenseCategory, on_delete=models.CASCADE, related_name='expense_category')
 
     def __str__(self):
