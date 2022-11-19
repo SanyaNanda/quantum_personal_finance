@@ -1,0 +1,43 @@
+{% extends "../base.html" %}
+{% block title %}QPF-Update Expense{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <h3>Update Your Expense</h3>
+      <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="amount">Amount <span>*</span></label>
+                <input type="int" class="form-control" name="amount" value="{{ amount }}" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="expense">Expense Name<span>*</span></label>
+                <input type="text" class="form-control" name="expense" value="{{ expense }}" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="note">Note</label>
+                <input type="text" class="form-control" name="note" value="{{ note }}">
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="time_stamp">Date<span>*</span></label>
+                <input type="date" class="form-control" name="time_stamp" value="{{ time_stamp }}" required>
+            </div> 
+            <div>
+            <label for="category">Category <span>*</span></label>
+            <select  class="btn-outline-primary" name="category">
+                {% for c in category_list %}
+                {% if c.id != category.id %}
+                 <option value="{{ c.id }}">{{ c.name }}</option>
+                {% else %}
+                <option selected value="{{ c.id }}">{{ c.name }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+            </div>
+        <button class="btn btn-primary w-100 mt-3" type="submit">Update Expense</button>
+        </div>  
+    </form>
+      {% endif %}
+  </div>
+  {% endblock %}

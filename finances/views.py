@@ -93,6 +93,37 @@ def AddExpenseView(request, username=None):
     }
     return render(request, template, context)
 
+####################################################################
+
+def UpdateExpenseView(request, username=None, id=None):
+    profile = User.objects.get(username=username)
+    expense = Expense.objects.get(profile__username=username,id=id)
+    expense_update = Expense.objects.filter(profile__username=username,id=id)
+    category = ExpenseCategory.objects.filter(profile__username=username)
+
+    context = {
+        'time_stamp':str(expense.time_stamp),
+        'expense':expense.expense,
+        'amount':expense.amount,
+        'note':expense.note,
+        'category':expense.category,
+        'category_list':category,
+    }
+
+    # print(str(income.time_stamp))
+    if request.method == 'POST':
+        time_stamp = request.POST['time_stamp']
+        expense = request.POST['expense']
+        amount = request.POST['amount']
+        note = request.POST['note']
+        category = ExpenseCategory.objects.get(id=request.POST.get('category'))
+        expense_update.update(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category)
+        return redirect('finances:expense', username=username)
+    template = 'finances/update_expense.html'
+    return render(request, template, context)
+
+####################################################################
+
 
 ####################################################################
 

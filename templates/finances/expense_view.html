@@ -165,7 +165,7 @@
                               <span class="text-secondary text-xs font-weight-bold">{{ expense.time_stamp }}</span>
                             </td>
                             <td class="align-middle">
-                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                <a href="{% url 'finances:update-expense' user.username expense.id%}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                   <i class="fa fa-edit"></i>
                                 </a>
                               </td>
