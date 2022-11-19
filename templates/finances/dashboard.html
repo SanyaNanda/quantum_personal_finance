@@ -59,6 +59,7 @@
                       ₹{{ monthly_expense }}
                       <span class="text-danger text-sm font-weight-bolder">{{ expense_percent }}%</span>
                     </h5>
+                    Monthy average: ₹{{ monthly_average }}
                   </div>
                 </div>
                 <div class="col-4 text-end">
@@ -78,7 +79,7 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Monthly Saved</p>
                     <h5 class="font-weight-bolder mb-0">
-                      ₹{{ monthly_saving }}
+                      ₹{{ monthly_saving }} 
                       <span class="text-success text-sm font-weight-bolder">{{ saving_percent }}%</span>
                     </h5>
                   </div>
@@ -158,6 +159,18 @@
         </div>
       </div>
     </div>  
+
+    <div class="col-xl-6 col-sm-12 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body"> 
+          <div style="width: 100%;">
+          <p><center>Some metrics</center></p>
+          <p class="text-sm mb-0 text-capitalize font-weight-bold">Daily average spent in {{ month }} {{ year }}</p>
+          <h5 class="font-weight-bolder mb-0">₹{{ daily_average }}</h5>
+          </div>
+        </div>
+      </div>
+    </div> 
   </div>
 </div> 
 

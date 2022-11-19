@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.db.models import Sum
 import calendar
+from django.db.models.functions import ExtractMonth, ExtractYear
+from django.db.models import Avg
 
 ####################################################################
 
@@ -175,7 +177,12 @@ def DashboardView(request, username=None):
         per_day_expense_keys = list(per_day_expense.keys())
         # print(per_day_expense_values)
         # print(per_day_expense_keys)
-        
+        daily_average = round(sum(per_day_expense_values)/per_day_expense_keys[-1], 2)
+        monthly_average = Expense.objects.filter(profile=profile).annotate(month=ExtractMonth('time_stamp'), year=ExtractYear('time_stamp')).values("month", "year").annotate(total=Sum('amount'))
+        monthly_average = [i["total"] for i in monthly_average ]
+        monthly_average = round(sum(monthly_average)/len(monthly_average),2)
+        # y = Avg(x)
+        # print(x, y)
         month = calendar.month_name[int(month)]
         
 
@@ -238,7 +245,9 @@ def DashboardView(request, username=None):
         'monthly_expense_details': monthly_expense_details,
 
         'per_day_expense_values': per_day_expense_values,
-        'per_day_expense_keys': per_day_expense_keys
+        'per_day_expense_keys': per_day_expense_keys,
+        'daily_average': daily_average,
+        'monthly_average': monthly_average
 
     }
     return render(request, template, context)
