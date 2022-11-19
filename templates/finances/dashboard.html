@@ -3,17 +3,17 @@
 
 {% block content %}
       {% if user.is_authenticated %}
-      <h3>Monthly Analytics: {{ month }}/{{ year }}</h3>
-      <h5>Filter Month</h5>
+      {% comment %} <h3>Monthly Analytics: {{ month }}/{{ year }}</h3> {% endcomment %}
+      {% comment %} <h5>Filter Month</h5> {% endcomment %}
       <form method="GET">
         {% csrf_token %}
         <div class="row" >
             <div class="col-md-6 mb-3">
-                <label for="month">Month <span>*</span></label>
+                <label for="month">Month (mm) <span>*</span></label>
                 <input type="int" class="form-control" name="month" value="" required>
             </div>  
             <div class="col-md-6 mb-3">
-                <label for="year">Year <span>*</span></label>
+                <label for="year">Year (yyyy) <span>*</span></label>
                 <input type="text" class="form-control" name="year" value="" required>
         </div>  
         <button class="btn w-100 mt-3 btn-primary" type="submit">Filter</button>
@@ -22,6 +22,8 @@
     {% if monthly_income == None %}
     <h5><span class="text-danger font-weight-bolder">NOTE: </span>No data added for the month. Please add income and expenses to view the Dashboard Analytics</h5>
     {% endif %}
+    <h3>Monthly Analytics: {{ month }} {{ year }}</h3>
+    <h5>Today is {{ today }} </h5>
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
@@ -144,6 +146,21 @@
   </div>
 </div>
 
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-xl-6 col-sm-12 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body"> 
+          <div style="width: 100%;">
+          <p><center>Daily Expense of the month</center></p>
+          <canvas id="line1"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+</div> 
+
 
     {% endif %}
   </div>
@@ -215,6 +232,22 @@
               }
           }; 
 
+        var myLineChart = {
+          type: 'line',
+          data: {
+            labels: {{ per_day_expense_keys|safe }},
+            datasets: [{
+              borderColor: '#FF74D4',
+              backgroundColor: '#FFB8DE',
+              data: {{ per_day_expense_values|safe }},
+              label: 'Daily Expense'
+            }]
+          },
+          options: {
+              responsive: true
+              }
+          };  
+
 
       window.onload = function() {
         var ctx = document.getElementById('pie-chart').getContext('2d');
@@ -225,6 +258,8 @@
         window.myDonut = new Chart(ctxxx, myDonut);
         var ctxxxx = document.getElementById('bar-chart1').getContext('2d');
         window.myBar1 = new Chart(ctxxxx, myBarChart1);
+        var ctxxxxx = document.getElementById('line1').getContext('2d');
+        window.myLine = new Chart(ctxxxxx, myLineChart);
       };
     </script>
 

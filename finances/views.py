@@ -8,6 +8,7 @@ from .models import Income, Expense, IncomeCategory, ExpenseCategory
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.db.models import Sum
+import calendar
 
 ####################################################################
 
@@ -89,7 +90,10 @@ def AddIncomeCategoryView(request, username=None):
 ####################################################################
 
 def DashboardView(request, username=None):
+    # get user profile
     profile = User.objects.get(username=username)
+
+    # get month and year (current or user specified)
     today = datetime.date.today()
     month = today.month
     year = today.year
@@ -97,13 +101,18 @@ def DashboardView(request, username=None):
     if 'month' in request.GET and 'year' in request.GET:
         month = request.GET['month']
         year = request.GET['year']
+
+    # get monthly income and expenses
     monthly_income = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year).aggregate(Sum('amount'))['amount__sum']
     monthly_income_details = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year)
     monthly_expense = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year).aggregate(Sum('amount'))['amount__sum']
     monthly_expense_details = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year)
+
+    # calculate useful metrics
     if monthly_income!=None:
         if monthly_expense==None:
             monthly_expense = 0
+        # monthly savings
         monthly_saving = monthly_income - monthly_expense
         expense_percent = round(monthly_expense*100/monthly_income,2)
         saving_percent = round(monthly_saving*100/monthly_income, 2)
@@ -111,6 +120,8 @@ def DashboardView(request, username=None):
         income_category = IncomeCategory.objects.filter(profile=profile)
         monthly_category_wise_income = {}
         # monthly_category_wise_income_percent = {}
+
+        # monthly category wise income
         for i in income_category:
             income = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i).aggregate(Sum('amount'))['amount__sum']
             income_list = Income.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i)
@@ -120,10 +131,13 @@ def DashboardView(request, username=None):
             # if income!=None:
             #     monthly_category_wise_income_percent[i.name] = round((income/monthly_income)*100, 2)
 
+        # Monthly category wise expense
         expense_category = ExpenseCategory.objects.filter(profile=profile)
         monthly_category_wise_expense = {}   
         monthly_category_wise_expense_percent = {}
         monthly_category_wise_expense_of_income = {'Saving': saving_percent}
+        per_day_expense = {}
+
         for i in expense_category:
             expense = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, category=i).aggregate(Sum('amount'))['amount__sum']
             if expense==None:
@@ -151,6 +165,22 @@ def DashboardView(request, username=None):
             monthly_category_wise_income_values = list(monthly_category_wise_income.values())
             monthly_category_wise_income_keys = list(monthly_category_wise_income.keys())
 
+        # Per day expense
+        for day in range(1,32):
+            expense = Expense.objects.filter(profile=profile, time_stamp__month=month, time_stamp__year=year, time_stamp__day=day).aggregate(Sum('amount'))['amount__sum']
+            if expense==None:
+                expense=0 
+            per_day_expense[day]=expense
+        per_day_expense_values = list(per_day_expense.values())
+        per_day_expense_keys = list(per_day_expense.keys())
+        # print(per_day_expense_values)
+        # print(per_day_expense_keys)
+        
+        month = calendar.month_name[int(month)]
+        
+
+
+
     # print(monthly_category_wise_income_values)
     # print(monthly_category_wise_income_keys)
     else:
@@ -163,6 +193,8 @@ def DashboardView(request, username=None):
         monthly_category_wise_expense_percent_keys = []
         monthly_category_wise_expense_of_income_values = []
         monthly_category_wise_expense_of_income_keys = []
+        per_day_expense_values = []
+        per_day_expense_keys = []
         income_list = []
         expense_list = []
         income_category = []
@@ -176,6 +208,7 @@ def DashboardView(request, username=None):
 
     template = 'finances/dashboard.html'
     context = {
+        'today': today,
         'month': month,
         'year': year,
         'monthly_income': monthly_income,
@@ -202,7 +235,11 @@ def DashboardView(request, username=None):
         'expense_percent': expense_percent,
         'saving_percent': saving_percent,
         'monthly_income_details': monthly_income_details,
-        'monthly_expense_details': monthly_expense_details
+        'monthly_expense_details': monthly_expense_details,
+
+        'per_day_expense_values': per_day_expense_values,
+        'per_day_expense_keys': per_day_expense_keys
+
     }
     return render(request, template, context)
 
