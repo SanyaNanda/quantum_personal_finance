@@ -50,6 +50,9 @@
                       <td class="align-middle text-center text-sm">
                         <span class="text-xs font-weight-bold"> {{ income.time_stamp }} </span>
                       </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="text-xs font-weight-bold"><a href="{% url 'finances:update-income' user.username income.id%}">Update</a></span>
+                      </td>
                     </tr>
                     {% endfor %}
                   </tbody>

@@ -46,6 +46,35 @@ def AddIncomeView(request, username=None):
 
 ####################################################################
 
+def UpdateIncomeView(request, username=None, id=None):
+    profile = User.objects.get(username=username)
+    income = Income.objects.get(profile__username=username,id=id)
+    income_update = Income.objects.filter(profile__username=username,id=id)
+    category = IncomeCategory.objects.filter(profile__username=username)
+
+    context = {
+        'time_stamp':str(income.time_stamp),
+        'source':income.source,
+        'amount':income.amount,
+        'note':income.note,
+        'category':income.category,
+        'category_list':category,
+    }
+
+    # print(str(income.time_stamp))
+    if request.method == 'POST':
+        time_stamp = request.POST['time_stamp']
+        source = request.POST['source']
+        amount = request.POST['amount']
+        note = request.POST['note']
+        category = IncomeCategory.objects.get(id=request.POST.get('category'))
+        income_update.update(profile=profile,source=source,amount=amount,note=note, time_stamp=time_stamp, category=category)
+        return redirect('finances:income', username=username)
+    template = 'finances/update_income.html'
+    return render(request, template, context)
+
+####################################################################
+
 def AddExpenseView(request, username=None):
     profile = User.objects.get(username=username)
     category = ExpenseCategory.objects.filter(profile__username=username)
