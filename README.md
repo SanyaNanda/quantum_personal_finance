@@ -18,9 +18,9 @@
 - Add expense category
 - View income and expenses listed by date (Filter by category or mm-yyyy)
 - Update and delete (expense and income items)
+- Special Benefit section (like flight renumeration from your company) (update works, delete doesn't)
 
 ## To Do
-- Special Benefit Category of income (like flight renumeration from your company)
 - Dedicated section for budgeting big life decisions (like wedding, college fees, kids etc)
 - Download csv/excel of data
 - Section to maintain Income Tax Return related information
