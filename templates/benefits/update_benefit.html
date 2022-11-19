@@ -1,0 +1,31 @@
+{% extends "../base.html" %}
+{% block title %}QPF-Update Benefit{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <h3>Update Your Benefit</h3>
+      <form method="post">
+        {% csrf_token %}
+        <div class="row" >
+            <div class="col-md-6 mb-3">
+                <label for="amount">Amount <span>*</span></label>
+                <input type="int" class="form-control" name="amount" value="{{ amount }}" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="source">Title <span>*</span></label>
+                <input type="text" class="form-control" name="title" value="{{ title }}" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="note">From</label>
+                <input type="text" class="form-control" name="sender" value="{{ sender }}" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="time_stamp">Date<span>*</span></label>
+                <input type="date" class="form-control" name="time_stamp" value="{{ time_stamp }}" required>
+            </div> 
+        <button class="btn w-100 mt-3 btn-primary" type="submit">Update Benefit</button>
+        </div>  
+    </form>
+      {% endif %}
+  </div>
+  {% endblock %} 

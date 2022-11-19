@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # apps
     'authenticate',
     'finances',
+    'benefits',
     # installed
     'crispy_forms',
 ]

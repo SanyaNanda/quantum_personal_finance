@@ -1,0 +1,93 @@
+{% extends "../base.html" %}
+{% block title %}QPF-Benefits Income{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <h3>Add Your Benefits</h3>
+      <form method="post">
+        {% csrf_token %}
+        <div class="row" >
+            <div class="col-md-6 mb-3">
+                <label for="amount">Amount <span>*</span></label>
+                <input type="int" class="form-control" name="amount" value="" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="title">Title <span>*</span></label>
+                <input type="text" class="form-control" name="title" value="" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="sender">From</label>
+                <input type="text" class="form-control" name="sender" value="" required>
+            </div>  
+            <div class="col-md-6 mb-3">
+                <label for="time_stamp">Date<span>*</span></label>
+                <input type="date" class="form-control" name="time_stamp" value="" required>
+            </div> 
+        <button class="btn w-100 mt-3 btn-primary" type="submit">Add Benefit</button>
+        </div>  
+    </form>
+
+    <h3>BENEFITS</h3>
+    <p> Total Benefits: ₹{{ total_benefit }}</p>
+      <div class="row my-4">
+        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="row">
+                <div class="col-lg-6 col-7">
+                  <h6>Benefits</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive">
+                <table class="table align-items-center mb-0 center">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Amount</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">From</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for benefit in benefit_list %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ benefit.title }}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="text-xs font-weight-bold"> ₹{{ benefit.amount }} </span>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="text-xs font-weight-bold"> {{ benefit.sender }} </span>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="text-xs font-weight-bold"> {{ benefit.time_stamp }} </span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="{% url 'benefits:update-benefit' user.username benefit.id%}">
+                          <i class="fa fa-edit"></i>
+                        </a>
+                      </td>
+                      <td class="align-middle">
+                        <a href="{% url 'benefits:delete-benefit' user.username benefit.id%}">
+                          <i class="fa fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    <br>
+
+      {% endif %}
+  {% endblock %} 
