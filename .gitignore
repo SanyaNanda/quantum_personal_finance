@@ -1,2 +1,6 @@
 db.sqlite3
 *.pyc 
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+__pycache__/
