@@ -74,6 +74,11 @@ def UpdateIncomeView(request, username=None, id=None):
     return render(request, template, context)
 
 ####################################################################
+def DeleteIncomeView(request, username=None, id=None):
+    Income.objects.filter(profile__username=username,id=id).delete()
+    return redirect('finances:income', username=username)
+
+####################################################################
 
 def AddExpenseView(request, username=None):
     profile = User.objects.get(username=username)
@@ -123,6 +128,10 @@ def UpdateExpenseView(request, username=None, id=None):
     return render(request, template, context)
 
 ####################################################################
+
+def DeleteExpenseView(request, username=None, id=None):
+    Expense.objects.filter(profile__username=username,id=id).delete()
+    return redirect('finances:expense', username=username)
 
 
 ####################################################################
@@ -270,6 +279,8 @@ def DashboardView(request, username=None):
         saving_percent = []
         monthly_income_details = []
         monthly_expense_details = []
+        daily_average = None
+        monthly_average = None
         
         
 
