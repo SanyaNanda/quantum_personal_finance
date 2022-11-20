@@ -18,13 +18,13 @@
 - Add expense category
 - View income and expenses listed by date (Filter by category or mm-yyyy)
 - Update and delete (expense and income items)
-- Special Benefit section (like flight renumeration from your company) (update works, delete doesn't)
+- Special Benefit section (like flight renumeration from your company) (update and delete feature as well)
 
 ## To Do
 - Dedicated section for budgeting big life decisions (like wedding, college fees, kids etc)
 - Download csv/excel of data
 - Section to maintain Income Tax Return related information
-- Weekly analysis (chart on dashboard): As of now one can see daily expenses plot, there should be a monthly and yearly plot too. Their should be a dial to set whatever you want.
+- Weekly analysis (chart on dashboard): As of now one can see daily expenses plot, there should be a monthly and yearly plot too. Their should be a dial to set whatever you want. With filters like set category etc
 
 1.1 Daily average of that month
 
