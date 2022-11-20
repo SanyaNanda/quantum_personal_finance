@@ -8,7 +8,7 @@ app_name = 'benefits'
 
 urlpatterns = [
    path('home/<username>/', BenefitsView,name="benefit-add-n-list"),
-   path('home/<username>/<int:id>', UpdateBenefitsView,name="update-benefit"),
-   path('home/<username>/<int:id>', DeleteBenefitsView,name="delete-benefit")
+   path('update-benefit/<username>/<int:id>', UpdateBenefitsView,name="update-benefit"),
+   path('delete-benefit/<username>/<int:id>', DeleteBenefitsView,name="delete-benefit")
 
 ]

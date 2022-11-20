@@ -51,7 +51,7 @@ def UpdateBenefitsView(request, username=None, id=None):
     return render(request, template, context)
 
 ####################################################################
-def DeleteBenefitsView(username=None, id=None):
+def DeleteBenefitsView(request, username=None, id=None):
     Benefits.objects.filter(profile__username=username,id=id).delete()
     return redirect('benefits:benefit-add-n-list', username=username)
 
