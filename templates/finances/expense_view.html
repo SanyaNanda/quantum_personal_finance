@@ -137,6 +137,7 @@
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Amount (in ₹)</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Category</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mode</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Edit</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delete</th>
                           </tr>
@@ -164,6 +165,13 @@
                             </td>
                             <td class="align-middle text-center">
                               <span class="text-secondary text-xs font-weight-bold">{{ expense.time_stamp }}</span>
+                            </td>
+                            <td class="align-middle text-center">
+                              {% if expense.digital_payment %}
+                              <span class="text-secondary text-xs font-weight-bold">Digital Payment</span>
+                              {% else %}
+                              <span class="text-secondary text-xs font-weight-bold">Cash</span>
+                              {% endif %}
                             </td>
                             <td class="align-middle">
                                 <a href="{% url 'finances:update-expense' user.username expense.id%}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">

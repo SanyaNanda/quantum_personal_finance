@@ -89,7 +89,8 @@ def AddExpenseView(request, username=None):
         amount = request.POST['amount']
         note = request.POST['note']
         category = ExpenseCategory.objects.get(id=request.POST.get('category'))
-        expense = Expense(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category)
+        digital_payment = request.POST['digital_payment']
+        expense = Expense(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category,digital_payment=digital_payment)
         expense.save()
         return redirect('finances:home', username=username)
     template = 'finances/add_expense.html'
@@ -105,6 +106,7 @@ def UpdateExpenseView(request, username=None, id=None):
     expense = Expense.objects.get(profile__username=username,id=id)
     expense_update = Expense.objects.filter(profile__username=username,id=id)
     category = ExpenseCategory.objects.filter(profile__username=username)
+    
 
     context = {
         'time_stamp':str(expense.time_stamp),
@@ -122,7 +124,8 @@ def UpdateExpenseView(request, username=None, id=None):
         amount = request.POST['amount']
         note = request.POST['note']
         category = ExpenseCategory.objects.get(id=request.POST.get('category'))
-        expense_update.update(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category)
+        digital_payment = request.POST['digital_payment']
+        expense_update.update(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category,digital_payment=digital_payment)
         return redirect('finances:expense', username=username)
     template = 'finances/update_expense.html'
     return render(request, template, context)
@@ -389,16 +392,19 @@ def IncomeView(request, username=None):
 def AnalyticsView(request, username=None):
     profile = User.objects.get(username=username)
     expense_category = ExpenseCategory.objects.filter(profile__username=username)
+    category_name = None
 
     if request.method == 'POST':
         category = ExpenseCategory.objects.get(id=request.POST.get('category'))
         expense = (Expense.objects.filter(profile=profile,category=category)
         .values('time_stamp')
         .annotate(value=Sum('amount')))
+        category_name = category.name
     else: 
         expense = (Expense.objects.filter(profile=profile)
         .values('time_stamp')
         .annotate(value=Sum('amount')))
+        
 
     expense_key = [str(k['time_stamp']) for k in expense]
     expense_value = [v['value'] for v in expense]
@@ -409,7 +415,7 @@ def AnalyticsView(request, username=None):
         'expense_category_list': expense_category,
         'expense_key': expense_key,
         'expense_value': expense_value,
-        'expense_category': category.name
+        'expense_category': category_name
     }
 
     return render(request, template, context)

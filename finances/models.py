@@ -37,6 +37,8 @@ class Expense(models.Model):
     amount = models.IntegerField()
     note = models.CharField(max_length=5000, blank=True)
     category = models.ForeignKey(ExpenseCategory, on_delete=models.CASCADE, related_name='expense_category')
+    digital_payment = models.BooleanField(default=True)
+
 
     def __str__(self):
         return self.expense

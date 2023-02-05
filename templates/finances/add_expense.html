@@ -31,6 +31,12 @@
                 {% endfor %}
             </select>
             </div>
+            <div class="col-md-6 mb-3">
+                <label for="digital_payment">Digital Payment<span>*</span></label>
+                {% comment %} <input type="checkbox" checked="true" class="form-control" name="digital_payment" required> {% endcomment %}
+                <input type="radio" name="digital_payment" value=True checked>Yes</input>
+                <input type="radio" name="digital_payment" value=False>No</input>
+            </div> 
         <button class="btn btn-primary w-100 mt-3" type="submit">Add Expense</button>
         </div>  
     </form>
