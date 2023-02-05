@@ -1,0 +1,65 @@
+{% extends "../base.html" %}
+{% block title %}QPF-Analytics{% endblock %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <form method="POST">
+        {% csrf_token %}
+        <div class="row" >
+            <div>
+                <label for="category">Category <span>*</span></label>
+                <select  class="btn-outline-primary" name="category">
+                    {% for c in expense_category_list %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-primary w-100 mt-3" type="submit">Filter</button>
+    </form>
+
+<h3>{{ expense_category }}</h3>
+    <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-xl-10 col-sm-10 mb-xl-0 mb-4">
+            <div class="card">
+              <div class="card-body"> 
+                <div style="width: 100%;">
+                <p><center>Analytics: {{ expense_category }}</center></p>
+                <canvas id="line1"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+
+        var myLineChart = {
+          type: 'line',
+          data: {
+            labels: {{ expense_key|safe }},
+            datasets: [{
+              borderColor: '#FF74D4',
+              backgroundColor: '#FFB8DE',
+              data: {{ expense_value|safe }},
+              label: 'Expense'
+            }]
+          },
+            animationEnabled: true,
+	        zoomEnabled: true,
+          options: {
+              responsive: true
+              }
+          };  
+
+
+      window.onload = function() {
+        var ctx = document.getElementById('line1').getContext('2d');
+        window.myLine = new Chart(ctx, myLineChart);
+      };
+    </script>
+      {% endif %}
+{% endblock %}

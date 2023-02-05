@@ -382,3 +382,35 @@ def IncomeView(request, username=None):
     profile = User.objects.get(username=username)
     context["income_list"] = Income.objects.filter(profile=profile).order_by('-id')
     return render(request, "finances/income_view.html", context)
+
+
+####################################################################
+
+def AnalyticsView(request, username=None):
+    profile = User.objects.get(username=username)
+    expense_category = ExpenseCategory.objects.filter(profile__username=username)
+
+    if request.method == 'POST':
+        category = ExpenseCategory.objects.get(id=request.POST.get('category'))
+        expense = (Expense.objects.filter(profile=profile,category=category)
+        .values('time_stamp')
+        .annotate(value=Sum('amount')))
+    else: 
+        expense = (Expense.objects.filter(profile=profile)
+        .values('time_stamp')
+        .annotate(value=Sum('amount')))
+
+    expense_key = [str(k['time_stamp']) for k in expense]
+    expense_value = [v['value'] for v in expense]
+
+    template = 'finances/analytics.html'
+
+    context = {
+        'expense_category_list': expense_category,
+        'expense_key': expense_key,
+        'expense_value': expense_value,
+        'expense_category': category.name
+    }
+
+    return render(request, template, context)
+

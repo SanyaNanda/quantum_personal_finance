@@ -19,5 +19,6 @@ urlpatterns = [
    path('dashboard/<username>/', DashboardView,name="dashboard"),
    path('expense/<username>/', ExpenseView,name="expense"),
    path('income/<username>/', IncomeView,name="income"),
+   path('analytics/<username>/', AnalyticsView,name="analytics"),
 
 ]
