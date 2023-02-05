@@ -23,7 +23,7 @@
                 <label for="time_stamp">Date<span>*</span></label>
                 <input type="date" class="form-control" name="time_stamp" value="{{ time_stamp }}" required>
             </div> 
-            <div>
+            <div class="col-md-6 mb-3">
             <label for="category">Category <span>*</span></label>
             <select  class="btn-outline-primary" name="category">
                 {% for c in category_list %}
@@ -40,6 +40,10 @@
                 <input type="radio" name="digital_payment" value=True checked>Yes</input>
                 <input type="radio" name="digital_payment" value=False>No</input>
             </div> 
+            <div class="col-md-6 mb-3">
+                <label for="location">Location<span>*</span></label>
+                <input type="text" class="form-control" name="location" value="Hyderabad, India" required>
+            </div>  
         <button class="btn btn-primary w-100 mt-3" type="submit">Update Expense</button>
         </div>  
     </form>

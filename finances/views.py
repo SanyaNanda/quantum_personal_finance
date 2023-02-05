@@ -90,7 +90,8 @@ def AddExpenseView(request, username=None):
         note = request.POST['note']
         category = ExpenseCategory.objects.get(id=request.POST.get('category'))
         digital_payment = request.POST['digital_payment']
-        expense = Expense(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category,digital_payment=digital_payment)
+        location = request.POST['location']
+        expense = Expense(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category,digital_payment=digital_payment,location=location)
         expense.save()
         return redirect('finances:home', username=username)
     template = 'finances/add_expense.html'
@@ -106,7 +107,6 @@ def UpdateExpenseView(request, username=None, id=None):
     expense = Expense.objects.get(profile__username=username,id=id)
     expense_update = Expense.objects.filter(profile__username=username,id=id)
     category = ExpenseCategory.objects.filter(profile__username=username)
-    
 
     context = {
         'time_stamp':str(expense.time_stamp),
@@ -115,7 +115,9 @@ def UpdateExpenseView(request, username=None, id=None):
         'note':expense.note,
         'category':expense.category,
         'category_list':category,
+        'location':expense.location
     }
+
 
     # print(str(income.time_stamp))
     if request.method == 'POST':
@@ -125,9 +127,11 @@ def UpdateExpenseView(request, username=None, id=None):
         note = request.POST['note']
         category = ExpenseCategory.objects.get(id=request.POST.get('category'))
         digital_payment = request.POST['digital_payment']
-        expense_update.update(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category,digital_payment=digital_payment)
+        location = request.POST['location']
+        expense_update.update(profile=profile,expense=expense,amount=amount,note=note, time_stamp=time_stamp, category=category,digital_payment=digital_payment,location=location)
         return redirect('finances:expense', username=username)
     template = 'finances/update_expense.html'
+    
     return render(request, template, context)
 
 ####################################################################
